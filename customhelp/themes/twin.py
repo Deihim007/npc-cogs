@@ -53,7 +53,7 @@ class TwinHelp(ThemesMeta):
             emb = await self.embed_template(help_settings, ctx, obj.long_desc)
 
             for cog_name, data in coms:
-                title = if cog_name and f"__**{cog_name}**__" else _("**No Category:**")
+                title = f"__**{cog_name}**__" if cog_name else _("**No Category:**")
                 cog_text = ", ".join(f"`{name}`" for name, command in sorted(data.items()))
                 for i, page in enumerate(
                     pagify(cog_text, page_length=1000, delims=[","], shorten_by=0)
