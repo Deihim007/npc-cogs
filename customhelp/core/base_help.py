@@ -506,19 +506,25 @@ class BaguetteHelp(commands.RedHelpFormatter):
             ctx.channel.is_nsfw() if hasattr(ctx.channel, "is_nsfw") else True
         ) or name not in blocklist["nsfw"]
 
-        b = await self.bot.is_owner(ctx.author) or name not in blocklist["dev"]
+        is_owner = await self.bot.is_owner(ctx.author)
+        is_admin = await self.bot.is_admin(ctx.author)
+        is_mod = await self.bot.is_mod(ctx.author)
+        
+        b = is_owner or is_admin or is_mod or name not in blocklist["dev"]
         return a and b
 
     async def filter_categories(self, ctx, categories: list) -> list:
         """Applies blacklist to all the categories, Filters based on the current context"""
         blocklist = await self.config.blacklist()
         is_owner = await self.bot.is_owner(ctx.author)
+        is_admin = await self.bot.is_admin(ctx.author)
+        is_mod = await self.bot.is_mod(ctx.author)
         final = []
         for name in categories:
             # This condition is made using a simple kmap.
             if (
                 (ctx.channel.is_nsfw() if hasattr(ctx.channel, "is_nsfw") else True)
                 or name not in blocklist["nsfw"]
-            ) and (is_owner or name not in blocklist["dev"]):
+            ) and (is_owner or is_admin or is_mod or name not in blocklist["dev"]):
                 final.append(name)
         return final
