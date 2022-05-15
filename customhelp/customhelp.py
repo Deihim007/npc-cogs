@@ -896,17 +896,17 @@ class CustomHelp(commands.Cog):
     async def add_nsfw(self, ctx, category: str):
         """Add categories to the nsfw list"""
         if cat_obj := get_category(category):
-            if "Core" in cat_obj.cogs:
-                return await ctx.send(
-                    "This category contains Core cog and shouldn't be hidden under any circumstances"
-                )
-            else:
-                async with self.config.blacklist.nsfw() as conf:
-                    if category not in conf:
-                        conf.append(category)
-                        await ctx.send(f"Sucessfully added {category} to nsfw category")
-                    else:
-                        await ctx.send(f"{category} is already present in nsfw blocklist")
+            # if "Core" in cat_obj.cogs:
+            #     return await ctx.send(
+            #         "This category contains Core cog and shouldn't be hidden under any circumstances"
+            #     )
+            # else:
+            async with self.config.blacklist.nsfw() as conf:
+                if category not in conf:
+                    conf.append(category)
+                    await ctx.send(f"Sucessfully added {category} to nsfw category")
+                else:
+                    await ctx.send(f"{category} is already present in nsfw blocklist")
         else:
             await ctx.send("Invalid category name")
 
@@ -934,17 +934,17 @@ class CustomHelp(commands.Cog):
     async def add_dev(self, ctx, category: str):
         """Add categories to the dev list"""
         if cat_obj := get_category(category):
-            if "Core" in cat_obj.cogs:
-                return await ctx.send(
-                    "This category contains Core cog and shouldn't be hidden under any circumstances"
-                )
-            else:
-                async with self.config.blacklist.dev() as conf:
-                    if category not in conf:
-                        conf.append(category)
-                        await ctx.send(f"Sucessfully added {category} to dev list")
-                    else:
-                        await ctx.send(f"{category} is already present in dev list")
+            # if "Core" in cat_obj.cogs:
+            #     return await ctx.send(
+            #         "This category contains Core cog and shouldn't be hidden under any circumstances"
+            #     )
+            # else:
+            async with self.config.blacklist.dev() as conf:
+                if category not in conf:
+                    conf.append(category)
+                    await ctx.send(f"Sucessfully added {category} to dev list")
+                else:
+                    await ctx.send(f"{category} is already present in dev list")
         else:
             await ctx.send("Invalid category name")
 
